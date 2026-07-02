@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/annonces/pages/annonce-detail/annonce-detail.component.css"],
+  "sourcesContent": [".detail-container {\n  animation: fadeIn 0.3s ease-in;\n}\n\n@keyframes fadeIn {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n.image-container {\n  background: var(--bg-card);\n  backdrop-filter: blur(10px);\n  border-radius: 12px;\n  overflow: hidden;\n  aspect-ratio: 1;\n}\n\n.image-container img {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n}\n\n.action-button {\n  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n.action-button:hover {\n  transform: translateY(-2px);\n  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);\n}\n"],
+  "mappings": ";AAAA,CAAC;AACC,aAAW,OAAO,KAAK;AACzB;AAEA,WAHa;AAIX;AACE,aAAS;AACX;AACA;AACE,aAAS;AACX;AACF;AAEA,CAAC;AACC,cAAY,IAAI;AAChB,2BAAiB,KAAK;AAAtB,mBAAiB,KAAK;AACtB,iBAAe;AACf,YAAU;AACV,gBAAc;AAChB;AAEA,CARC,gBAQgB;AACf,SAAO;AACP,UAAQ;AACR,cAAY;AACd;AAEA,CAAC;AACC,cAAY,IAAI,KAAK,aAAa,GAAG,EAAE,CAAC,EAAE,GAAG,EAAE;AACjD;AAEA,CAJC,aAIa;AACZ,aAAW,WAAW;AACtB,cAAY,EAAE,IAAI,KAAK,KAAK,CAAC,EAAE,CAAC,EAAE,CAAC,EAAE;AACvC;",
+  "names": []
+}

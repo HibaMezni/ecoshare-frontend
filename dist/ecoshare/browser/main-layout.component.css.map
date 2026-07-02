@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/layouts/main-layout/main-layout.component.css"],
+  "sourcesContent": [":host {\n  display: block;\n  min-height: 100vh;\n  background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-dark) 100%);\n}\n\nmain {\n  display: flex;\n  flex-direction: column;\n}\n"],
+  "mappings": ";AAAA;AACE,WAAS;AACT,cAAY;AACZ;AAAA,IAAY;AAAA,MAAgB,MAAM;AAAA,MAAE,IAAI,WAAW,EAAE;AAAA,MAAE,IAAI,WAAW;AACxE;AAEA;AACE,WAAS;AACT,kBAAgB;AAClB;",
+  "names": []
+}

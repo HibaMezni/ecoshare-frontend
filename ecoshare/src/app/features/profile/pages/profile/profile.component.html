@@ -1,0 +1,101 @@
+<div class="min-h-screen bg-gradient-to-br from-dark-950 via-dark-900 to-dark-800">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <ng-container *ngIf="currentUser">
+      <!-- Header -->
+      <div class="glass rounded-2xl p-8 mb-8">
+        <div class="flex items-center gap-6">
+          <div class="w-24 h-24 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-4xl">
+            👤
+          </div>
+          <div class="flex-1">
+            <h1 class="text-4xl font-bold text-text-primary mb-2">
+              {{ currentUser.prenom }} {{ currentUser.nom }}
+            </h1>
+            <p class="text-text-secondary mb-4">
+              Membre actif de la communauté EcoShare
+            </p>
+            <div class="space-y-2 text-sm text-text-secondary">
+              <div>📧 {{ currentUser.email }}</div>
+              <div>📱 {{ currentUser.telephone }}</div>
+              <div>📍 {{ currentUser.adresse }}, {{ currentUser.codepostal }} {{ currentUser.ville }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="glass rounded-2xl p-6 text-center">
+          <h3 class="text-5xl font-bold text-primary-400 mb-2">
+            {{ userAnnonces.length }}
+          </h3>
+          <p class="text-text-secondary">Annonces créées</p>
+        </div>
+        <div class="glass rounded-2xl p-6 text-center">
+          <h3 class="text-5xl font-bold text-secondary-400 mb-2">
+            {{ userDemandes.length }}
+          </h3>
+          <p class="text-text-secondary">Demandes créées</p>
+        </div>
+      </div>
+
+      <!-- My Annonces -->
+      <div class="mb-8">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-3xl font-bold text-text-primary">Mes annonces</h2>
+          <a routerLink="/annonces/create" class="px-4 py-2 rounded-lg bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-smooth">
+            + Nouvelle
+          </a>
+        </div>
+
+        <div *ngIf="userAnnonces.length === 0" class="glass rounded-2xl p-8 text-center text-text-secondary">
+          Vous n'avez pas encore créé d'annonces
+        </div>
+
+        <div *ngIf="userAnnonces.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <a
+            *ngFor="let annonce of userAnnonces"
+            [routerLink]="['/annonces', annonce.id]"
+            class="glass rounded-xl p-6 hover:border-primary-500/50 transition-smooth group">
+            <h3 class="text-lg font-semibold text-text-primary group-hover:text-primary-400 transition-smooth mb-2">
+              {{ annonce.titre }}
+            </h3>
+            <p class="text-text-secondary text-sm mb-4 line-clamp-2">
+              {{ annonce.description }}
+            </p>
+            <span class="px-3 py-1 rounded-full bg-primary-500/20 text-primary-400 text-xs font-semibold">
+              {{ annonce.etat }}
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- My Demandes -->
+      <div>
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-3xl font-bold text-text-primary">Mes demandes</h2>
+        </div>
+
+        <div *ngIf="userDemandes.length === 0" class="glass rounded-2xl p-8 text-center text-text-secondary">
+          Vous n'avez pas encore créé de demandes
+        </div>
+
+        <div *ngIf="userDemandes.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div
+            *ngFor="let demande of userDemandes"
+            class="glass rounded-xl p-6 hover:border-secondary-500/50 transition-smooth group">
+            <h3 class="text-lg font-semibold text-text-primary group-hover:text-secondary-400 transition-smooth mb-2">
+              {{ demande.titre }}
+            </h3>
+            <p class="text-text-secondary text-sm mb-4 line-clamp-2">
+              {{ demande.description }}
+            </p>
+            <span class="px-3 py-1 rounded-full bg-secondary-500/20 text-secondary-400 text-xs font-semibold">
+              {{ demande.statut }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

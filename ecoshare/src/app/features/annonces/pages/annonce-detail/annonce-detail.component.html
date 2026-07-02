@@ -1,0 +1,167 @@
+<div class="min-h-screen bg-gradient-to-br from-dark-950 via-dark-900 to-dark-800">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Back Button -->
+    <a routerLink="/annonces" class="inline-flex items-center gap-2 text-primary-400 hover:text-primary-300 transition-smooth mb-8">
+      <span>←</span>
+      Retour aux annonces
+    </a>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="flex justify-center items-center py-20">
+      <div class="text-center">
+        <div class="inline-block w-12 h-12 border-4 border-primary-500/20 border-t-primary-500 rounded-full animate-spin"></div>
+        <p class="text-text-secondary mt-4">Chargement...</p>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div *ngIf="!isLoading && annonce" class="space-y-8">
+      <!-- Main Image -->
+      <div class="glass rounded-2xl overflow-hidden h-96">
+        <img
+          *ngIf="annonce.image"
+          [src]="annonce.image"
+          [alt]="annonce.titre"
+          class="w-full h-full object-cover">
+        <div *ngIf="!annonce.image" class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-500/20 to-secondary-500/20">
+          <div class="text-8xl">📦</div>
+        </div>
+      </div>
+
+      <!-- Header -->
+      <div class="glass rounded-2xl p-8">
+        <div class="flex justify-between items-start gap-6 mb-6">
+          <div class="flex-1">
+            <h1 class="text-4xl font-bold text-text-primary mb-3">
+              {{ annonce.titre }}
+            </h1>
+            <div class="flex items-center gap-3">
+              <span [ngClass]="getEtatBadgeClass(annonce.etat)" class="px-4 py-2 rounded-full text-sm font-semibold">
+                {{ annonce.etat }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div *ngIf="isOwner" class="flex gap-3">
+            <a
+              [routerLink]="['/annonces', annonce.id, 'edit']"
+              class="px-4 py-2 rounded-lg bg-secondary-500/20 text-secondary-400 hover:bg-secondary-500/30 transition-smooth font-medium">
+              ✏️ Éditer
+            </a>
+            <button
+              *ngIf="!isDeleteConfirming"
+              (click)="isDeleteConfirming = true"
+              class="px-4 py-2 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-smooth font-medium">
+              🗑️ Supprimer
+            </button>
+            <div *ngIf="isDeleteConfirming" class="flex gap-2">
+              <button
+                (click)="deleteAnnonce()"
+                class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-smooth font-medium">
+                Confirmer
+              </button>
+              <button
+                (click)="isDeleteConfirming = false"
+                class="px-4 py-2 rounded-lg bg-text-secondary/20 text-text-secondary hover:bg-text-secondary/30 transition-smooth font-medium">
+                Annuler
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <p class="text-text-secondary text-lg leading-relaxed">
+          {{ annonce.description }}
+        </p>
+      </div>
+
+      <!-- Details Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Info Card 1 -->
+        <div class="glass rounded-2xl p-6">
+          <h3 class="text-sm font-semibold text-text-secondary uppercase tracking-wide mb-4">
+            📁 Catégorie
+          </h3>
+          <p class="text-2xl font-bold text-primary-400">
+            {{ annonce.categorie?.nom }}
+          </p>
+        </div>
+
+        <!-- Info Card 2 -->
+        <div class="glass rounded-2xl p-6">
+          <h3 class="text-sm font-semibold text-text-secondary uppercase tracking-wide mb-4">
+            📍 Localisation
+          </h3>
+          <p class="text-2xl font-bold text-secondary-400">
+            {{ annonce.localisation }}
+          </p>
+        </div>
+
+        <!-- Info Card 3 -->
+        <div class="glass rounded-2xl p-6">
+          <h3 class="text-sm font-semibold text-text-secondary uppercase tracking-wide mb-4">
+            📅 Date de création
+          </h3>
+          <p class="text-lg font-semibold text-text-primary">
+            {{ annonce.dateCreation | date: 'dd/MM/yyyy à HH:mm' }}
+          </p>
+        </div>
+
+        <!-- Info Card 4 -->
+        <div class="glass rounded-2xl p-6">
+          <h3 class="text-sm font-semibold text-text-secondary uppercase tracking-wide mb-4">
+            👤 Propriétaire
+          </h3>
+          <p class="text-lg font-semibold text-text-primary">
+            {{ annonce.user?.prenom }} {{ annonce.user?.nom }}
+          </p>
+          <p class="text-sm text-text-secondary mt-2">
+            📧 {{ annonce.user?.email }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Contact Section -->
+      <div class="glass rounded-2xl p-8">
+        <h3 class="text-2xl font-bold text-text-primary mb-6">
+          Contacter le propriétaire
+        </h3>
+        <div class="space-y-4">
+          <div class="flex items-center gap-4 p-4 rounded-lg bg-primary-500/10 border border-primary-500/20">
+            <span class="text-3xl">📧</span>
+            <div class="flex-1">
+              <p class="text-sm text-text-secondary">Email</p>
+              <a [href]="'mailto:' + annonce.user?.email" class="text-primary-400 hover:text-primary-300 font-semibold transition-smooth">
+                {{ annonce.user?.email }}
+              </a>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 p-4 rounded-lg bg-secondary-500/10 border border-secondary-500/20">
+            <span class="text-3xl">📱</span>
+            <div class="flex-1">
+              <p class="text-sm text-text-secondary">Téléphone</p>
+              <a [href]="'tel:' + annonce.user?.telephone" class="text-secondary-400 hover:text-secondary-300 font-semibold transition-smooth">
+                {{ annonce.user?.telephone }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Not Found -->
+    <div *ngIf="!isLoading && !annonce" class="text-center py-20">
+      <div class="text-5xl mb-4">❌</div>
+      <h3 class="text-2xl font-semibold text-text-primary mb-2">
+        Annonce non trouvée
+      </h3>
+      <p class="text-text-secondary mb-6">
+        L'annonce que vous recherchez n'existe pas
+      </p>
+      <a routerLink="/annonces" class="px-6 py-3 rounded-lg bg-primary-500 text-white font-semibold hover:bg-primary-600 transition-smooth">
+        Retour aux annonces
+      </a>
+    </div>
+  </div>
+</div>

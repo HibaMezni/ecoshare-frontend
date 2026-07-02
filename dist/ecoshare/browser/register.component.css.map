@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/auth/pages/register/register.component.css"],
+  "sourcesContent": [":host {\n  display: block;\n}\n\ninput {\n  background-color: var(--bg-card);\n  color: var(--text-primary);\n  border: 1px solid rgba(255, 255, 255, 0.1);\n}\n\ninput::placeholder {\n  color: var(--text-secondary);\n  opacity: 0.5;\n}\n\ninput:focus {\n  background-color: var(--bg-card);\n  border-color: var(--primary);\n}\n\nbutton:hover:not(:disabled) {\n  transform: translateY(-2px);\n}\n"],
+  "mappings": ";AAAA;AACE,WAAS;AACX;AAEA;AACE,oBAAkB,IAAI;AACtB,SAAO,IAAI;AACX,UAAQ,IAAI,MAAM,KAAK,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE;AACxC;AAEA,KAAK;AACH,SAAO,IAAI;AACX,WAAS;AACX;AAEA,KAAK;AACH,oBAAkB,IAAI;AACtB,gBAAc,IAAI;AACpB;AAEA,MAAM,MAAM,KAAK;AACf,aAAW,WAAW;AACxB;",
+  "names": []
+}

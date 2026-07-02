@@ -1,0 +1,29 @@
+:host {
+  display: block;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+input,
+select {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+input::placeholder,
+select {
+  color: var(--text-secondary);
+  opacity: 0.5;
+}
+
+input:focus,
+select:focus {
+  background-color: var(--bg-card);
+  border-color: var(--primary);
+}

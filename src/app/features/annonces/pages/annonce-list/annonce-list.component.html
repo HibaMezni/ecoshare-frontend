@@ -1,0 +1,136 @@
+<div class="min-h-screen bg-gradient-to-br from-dark-950 via-dark-900 to-dark-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Header -->
+    <div class="mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-500 via-secondary-500 to-primary-600 bg-clip-text text-transparent mb-4">
+        Découvrez les Annonces
+      </h1>
+      <p class="text-text-secondary text-lg">
+        Parcourez nos articles disponibles et trouvez ce qu'il vous faut
+      </p>
+    </div>
+
+    <!-- Create Button -->
+    <div class="flex justify-between items-center mb-8">
+      <div class="text-sm text-text-secondary">
+        {{ filteredAnnonces.length }} annonce(s) trouvée(s)
+      </div>
+      <a routerLink="/annonces/create" class="px-6 py-3 rounded-lg bg-gradient-to-r from-primary-500 to-primary-600 text-white font-semibold hover:shadow-lg hover:shadow-primary-500/50 transition-smooth">
+        + Créer une annonce
+      </a>
+    </div>
+
+    <!-- Filters -->
+    <div class="glass rounded-2xl p-6 mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Search -->
+        <div>
+          <label for="search" class="block text-sm font-medium text-text-primary mb-2">
+            Rechercher
+          </label>
+          <input
+            id="search"
+            type="text"
+            [(ngModel)]="searchQuery"
+            (input)="onSearchChange()"
+            placeholder="Rechercher une annonce..."
+            class="w-full px-4 py-3 rounded-lg glass focus:outline-none focus:ring-2 focus:ring-primary-500 transition-smooth text-text-primary placeholder:text-text-secondary/50"
+          />
+        </div>
+
+        <!-- Category Filter -->
+        <div>
+          <label for="category" class="block text-sm font-medium text-text-primary mb-2">
+            Catégorie
+          </label>
+          <select
+            id="category"
+            [(ngModel)]="selectedCategory"
+            (change)="onCategoryChange()"
+            class="w-full px-4 py-3 rounded-lg glass focus:outline-none focus:ring-2 focus:ring-primary-500 transition-smooth text-text-primary">
+            <option value="">Toutes les catégories</option>
+            <option *ngFor="let cat of categories" [value]="cat.id">
+              {{ cat.nom }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="flex justify-center items-center py-20">
+      <div class="text-center">
+        <div class="inline-block w-12 h-12 border-4 border-primary-500/20 border-t-primary-500 rounded-full animate-spin"></div>
+        <p class="text-text-secondary mt-4">Chargement des annonces...</p>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && filteredAnnonces.length === 0" class="text-center py-20">
+      <div class="text-5xl mb-4">🔍</div>
+      <h3 class="text-2xl font-semibold text-text-primary mb-2">
+        Aucune annonce trouvée
+      </h3>
+      <p class="text-text-secondary">
+        Essayez de modifier vos critères de recherche
+      </p>
+    </div>
+
+    <!-- Annonces Grid -->
+    <div *ngIf="!isLoading && filteredAnnonces.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <a
+        *ngFor="let annonce of filteredAnnonces"
+        [routerLink]="['/annonces', annonce.id]"
+        class="glass rounded-xl overflow-hidden hover:border-primary-500/50 hover:shadow-lg hover:shadow-primary-500/20 transition-smooth group">
+        <!-- Image -->
+        <div class="w-full h-48 bg-gradient-to-br from-primary-500/20 to-secondary-500/20 flex items-center justify-center overflow-hidden">
+          <img
+            *ngIf="annonce.image"
+            [src]="annonce.image"
+            [alt]="annonce.titre"
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+          <div *ngIf="!annonce.image" class="text-5xl">📦</div>
+        </div>
+
+        <!-- Content -->
+        <div class="p-6">
+          <!-- Header -->
+          <div class="flex justify-between items-start gap-4 mb-3">
+            <h3 class="text-xl font-semibold text-text-primary group-hover:text-primary-400 transition-smooth flex-1">
+              {{ annonce.titre }}
+            </h3>
+            <span [ngClass]="getEtatBadgeClass(annonce.etat)" class="px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap">
+              {{ annonce.etat }}
+            </span>
+          </div>
+
+          <!-- Description -->
+          <p class="text-text-secondary text-sm mb-4 line-clamp-2">
+            {{ annonce.description }}
+          </p>
+
+          <!-- Meta -->
+          <div class="space-y-2 text-sm text-text-secondary mb-4">
+            <div class="flex items-center gap-2">
+              <span>📁</span>
+              <span>{{ annonce.categorie?.nom }}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span>📍</span>
+              <span>{{ annonce.localisation }}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span>👤</span>
+              <span>{{ annonce.user?.prenom }} {{ annonce.user?.nom }}</span>
+            </div>
+          </div>
+
+          <!-- Date -->
+          <div class="text-xs text-text-secondary/50 border-t border-primary/10 pt-3">
+            Créée le {{ annonce.dateCreation | date: 'dd/MM/yyyy' }}
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

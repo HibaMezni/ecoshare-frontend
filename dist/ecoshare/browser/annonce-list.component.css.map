@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/annonces/pages/annonce-list/annonce-list.component.css"],
+  "sourcesContent": [":host {\n  display: block;\n}\n\n.line-clamp-2 {\n  display: -webkit-box;\n  -webkit-line-clamp: 2;\n  -webkit-box-orient: vertical;\n  overflow: hidden;\n}\n\ninput,\nselect {\n  background-color: var(--bg-card);\n  color: var(--text-primary);\n  border: 1px solid rgba(255, 255, 255, 0.1);\n}\n\ninput::placeholder,\nselect {\n  color: var(--text-secondary);\n  opacity: 0.5;\n}\n\ninput:focus,\nselect:focus {\n  background-color: var(--bg-card);\n  border-color: var(--primary);\n}\n"],
+  "mappings": ";AAAA;AACE,WAAS;AACX;AAEA,CAAC;AACC,WAAS;AACT,sBAAoB;AACpB,sBAAoB;AACpB,YAAU;AACZ;AAEA;AACA;AACE,oBAAkB,IAAI;AACtB,SAAO,IAAI;AACX,UAAQ,IAAI,MAAM,KAAK,GAAG,EAAE,GAAG,EAAE,GAAG,EAAE;AACxC;AAEA,KAAK;AACL;AACE,SAAO,IAAI;AACX,WAAS;AACX;AAEA,KAAK;AACL,MAAM;AACJ,oBAAkB,IAAI;AACtB,gBAAc,IAAI;AACpB;",
+  "names": []
+}
