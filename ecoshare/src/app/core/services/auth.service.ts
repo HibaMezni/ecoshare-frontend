@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 
 export interface LoginRequest {
   email: string;
@@ -12,25 +12,16 @@ export interface RegisterRequest {
   nom: string;
   prenom: string;
   email: string;
-  password: string;
+  motDePasse: string;
   telephone: string;
   adresse: string;
-  codepostal: string;
-  ville: string;
 }
 
 export interface AuthResponse {
   token: string;
-  user: {
-    id: number;
-    nom: string;
-    prenom: string;
-    email: string;
-    telephone: string;
-    adresse: string;
-    codepostal: string;
-    ville: string;
-  };
+  id: number;
+  email: string;
+  role: string;
 }
 
 @Injectable({
@@ -40,7 +31,6 @@ export class AuthService {
   private apiUrl = '/api';
   private currentUserSubject = new BehaviorSubject<any>(this.getUserFromStorage());
   public currentUser$ = this.currentUserSubject.asObservable();
-
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(!!localStorage.getItem('token'));
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
@@ -49,8 +39,13 @@ export class AuthService {
   }
 
   private getUserFromStorage() {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
+    try {
+      const user = localStorage.getItem('user');
+      return user && user !== 'undefined' ? JSON.parse(user) : null;
+    } catch (e) {
+      localStorage.removeItem('user');
+      return null;
+    }
   }
 
   private checkTokenValidity() {
@@ -58,10 +53,7 @@ export class AuthService {
     if (token) {
       try {
         const payload = JSON.parse(atob(token.split('.')[1]));
-        const expirationDate = new Date(payload.exp * 1000);
-        if (expirationDate < new Date()) {
-          this.logout();
-        }
+        if (new Date(payload.exp * 1000) < new Date()) this.logout();
       } catch (e) {
         this.logout();
       }
@@ -69,16 +61,18 @@ export class AuthService {
   }
 
   login(credentials: LoginRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, credentials)
+    return this.http.post<any>(`${this.apiUrl}/auth/login`, credentials)
       .pipe(
-        tap(response => this.handleAuthResponse(response))
+        map(response => response.data ?? response),
+        tap(data => this.handleAuthResponse(data))
       );
   }
 
   register(data: RegisterRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, data)
+    return this.http.post<any>(`${this.apiUrl}/auth/register`, data)
       .pipe(
-        tap(response => this.handleAuthResponse(response))
+        map(response => response.data ?? response),
+        tap(authData => this.handleAuthResponse(authData))
       );
   }
 
@@ -89,10 +83,10 @@ export class AuthService {
     this.isAuthenticatedSubject.next(false);
   }
 
-  private handleAuthResponse(response: AuthResponse): void {
-    localStorage.setItem('token', response.token);
-    localStorage.setItem('user', JSON.stringify(response.user));
-    this.currentUserSubject.next(response.user);
+  private handleAuthResponse(data: AuthResponse): void {
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('user', JSON.stringify(data));
+    this.currentUserSubject.next(data);
     this.isAuthenticatedSubject.next(true);
   }
 

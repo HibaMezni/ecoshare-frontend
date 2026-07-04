@@ -72,3 +72,134 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-dark);
 }
+/* ===== THEME FIXES ===== */
+
+/* Fix navbar background */
+[data-theme="dark"] nav,
+[data-theme="dark"] header {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] nav,
+[data-theme="light"] header {
+  background-color: #ffffff !important;
+  color: #1a1a1a !important;
+}
+
+/* Fix dropdown/select in dark mode */
+[data-theme="dark"] select,
+[data-theme="dark"] select option {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] select,
+[data-theme="light"] select option {
+  background-color: #ffffff !important;
+  color: #1a1a1a !important;
+}
+
+/* Fix all card/container backgrounds */
+[data-theme="dark"] .bg-white {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .bg-white {
+  background-color: #ffffff !important;
+  color: #1a1a1a !important;
+}
+
+/* Fix text colors */
+[data-theme="dark"] .text-gray-900,
+[data-theme="dark"] .text-black {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .text-white {
+  color: #1a1a1a !important;
+}
+
+/* Fix input backgrounds */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+  border-color: #334155 !important;
+}
+
+[data-theme="light"] input,
+[data-theme="light"] textarea {
+  background-color: #ffffff !important;
+  color: #1a1a1a !important;
+  border-color: #d1d5db !important;
+}
+
+/* Fix main content background */
+[data-theme="dark"] main,
+[data-theme="dark"] .main-content {
+  background-color: #0a0a0a !important;
+}
+
+[data-theme="light"] main,
+[data-theme="light"] .main-content {
+  background-color: #f8fafc !important;
+}
+/* Fix light mode backgrounds */
+[data-theme="light"] body,
+[data-theme="light"] html {
+  background-color: #f8fafc !important;
+  color: #1a1a1a !important;
+}
+
+[data-theme="light"] main,
+[data-theme="light"] div,
+[data-theme="light"] section {
+  background-color: transparent !important;
+  color: #1a1a1a !important;
+}
+
+[data-theme="light"] .glass,
+[data-theme="light"] form,
+[data-theme="light"] .card {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Fix text visibility in light mode */
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] p,
+[data-theme="light"] label,
+[data-theme="light"] span {
+  color: #1a1a1a !important;
+}
+/* Fix annonce list page background in light mode */
+[data-theme="light"] .from-dark-950,
+[data-theme="light"] .via-dark-900,
+[data-theme="light"] .to-dark-800,
+[data-theme="light"] .bg-gradient-to-br {
+  background: #f8fafc !important;
+}
+
+[data-theme="light"] .min-h-screen {
+  background: #f8fafc !important;
+}
+
+/* Fix text-text-secondary and text-text-primary in light mode */
+[data-theme="light"] .text-text-secondary {
+  color: #64748b !important;
+}
+
+[data-theme="light"] .text-text-primary {
+  color: #1a1a1a !important;
+}
+
+/* Fix glass component in light mode */
+[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid #e2e8f0 !important;
+  backdrop-filter: blur(10px);
+}

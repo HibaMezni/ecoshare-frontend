@@ -89,7 +89,7 @@
             [src]="annonce.image"
             [alt]="annonce.titre"
             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
-          <div *ngIf="!annonce.image" class="text-5xl">📦</div>
+          <img [src]="'https://picsum.photos/id/' + (annonce.id * 7 % 100) + '/400/300'" class="w-full h-full object-cover" alt="annonce image"/>
         </div>
 
         <!-- Content -->
@@ -99,7 +99,7 @@
             <h3 class="text-xl font-semibold text-text-primary group-hover:text-primary-400 transition-smooth flex-1">
               {{ annonce.titre }}
             </h3>
-            <span [ngClass]="getEtatBadgeClass(annonce.etat)" class="px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap">
+            <span [ngClass]="getEtatBadgeClass(annonce.etatObjet)" class="px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap">
               {{ annonce.etat }}
             </span>
           </div>

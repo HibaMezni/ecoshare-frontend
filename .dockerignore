@@ -1,0 +1,8 @@
+ecoshare/node_modules
+ecoshare/dist
+ecoshare/.angular
+ecoshare/.git
+ecoshare/coverage
+*.md
+.git
+.gitignore
