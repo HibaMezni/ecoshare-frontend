@@ -39,8 +39,13 @@ export class AuthService {
   }
 
   private getUserFromStorage() {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
+    try {
+      const user = localStorage.getItem('user');
+      return user && user !== 'undefined' ? JSON.parse(user) : null;
+    } catch (e) {
+      localStorage.removeItem('user');
+      return null;
+    }
   }
 
   private checkTokenValidity() {
