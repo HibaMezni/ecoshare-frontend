@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,33 +19,33 @@ export class ApiService {
   }
 
   get<T>(endpoint: string): Observable<T> {
-    return this.http.get<T>(`${this.apiUrl}${endpoint}`, {
+    return this.http.get<any>(`${this.apiUrl}${endpoint}`, {
       headers: this.getHeaders()
-    });
+    }).pipe(map(response => response.data ?? response));
   }
 
   post<T>(endpoint: string, data: any): Observable<T> {
-    return this.http.post<T>(`${this.apiUrl}${endpoint}`, data, {
+    return this.http.post<any>(`${this.apiUrl}${endpoint}`, data, {
       headers: this.getHeaders()
-    });
+    }).pipe(map(response => response.data ?? response));
   }
 
   put<T>(endpoint: string, data: any): Observable<T> {
-    return this.http.put<T>(`${this.apiUrl}${endpoint}`, data, {
+    return this.http.put<any>(`${this.apiUrl}${endpoint}`, data, {
       headers: this.getHeaders()
-    });
+    }).pipe(map(response => response.data ?? response));
   }
 
   delete<T>(endpoint: string): Observable<T> {
-    return this.http.delete<T>(`${this.apiUrl}${endpoint}`, {
+    return this.http.delete<any>(`${this.apiUrl}${endpoint}`, {
       headers: this.getHeaders()
-    });
+    }).pipe(map(response => response.data ?? response));
   }
 
   patch<T>(endpoint: string, data: any): Observable<T> {
-    return this.http.patch<T>(`${this.apiUrl}${endpoint}`, data, {
+    return this.http.patch<any>(`${this.apiUrl}${endpoint}`, data, {
       headers: this.getHeaders()
-    });
+    }).pipe(map(response => response.data ?? response));
   }
 }
 

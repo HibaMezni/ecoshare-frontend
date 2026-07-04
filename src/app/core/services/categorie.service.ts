@@ -7,7 +7,9 @@ export interface Categorie {
   id: number;
   nom: string;
   description?: string;
-  icon?: string;
+  icone?: string;
+  couleur?: string;
+  actif?: boolean;
 }
 
 @Injectable({
@@ -29,17 +31,11 @@ export class CategorieService {
 
   getAllCategories(): Observable<Categorie[]> {
     return this.apiService.get<Categorie[]>('/categories')
-      .pipe(
-        tap(categories => this.categoriesSubject.next(categories))
-      );
+      .pipe(tap(categories => this.categoriesSubject.next(categories)));
   }
 
   getCategorieById(id: number): Observable<Categorie> {
     return this.apiService.get<Categorie>(`/categories/${id}`);
-  }
-
-  getCategorieByNom(nom: string): Observable<Categorie> {
-    return this.apiService.get<Categorie>(`/categories/nom/${nom}`);
   }
 
   getCategories(): Categorie[] {
