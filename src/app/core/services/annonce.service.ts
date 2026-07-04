@@ -1,46 +1,44 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { MockDataService } from './mock-data.service';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 export interface Annonce {
   id?: number;
   titre: string;
   description: string;
-  categorie: { id: number };
-  image?: string;
-  etat: string;
-  localisation: string;
-  dateCreation?: string;
-  userId?: number;
-  user?: any;
+  categorieId: number;
+  imageBase64?: string;
+  etatObjet: string;
+  typeDon: string;
+  ville: string;
+  utilisateurId?: number;
 }
 
 export interface AnnonceResponse {
   id: number;
   titre: string;
   description: string;
-  categorie: any;
-  image: string;
-  etat: string;
-  localisation: string;
+  categorieId: number;
+  categorieNom: string;
+  imageBase64: string;
+  etatObjet: string;
+  typeDon: string;
+  ville: string;
+  statut: string;
+  nombreVues: number;
   dateCreation: string;
-  userId: number;
-  user: any;
+  utilisateurId: number;
+  utilisateurNom: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnnonceService {
-  constructor(private apiService: ApiService, private mockDataService: MockDataService) {}
+  constructor(private apiService: ApiService) {}
 
   getAllAnnonces(): Observable<AnnonceResponse[]> {
-    return this.apiService.get<AnnonceResponse[]>('/annonces')
-      .pipe(
-        catchError(() => of(this.mockDataService.getAnnonces() as any))
-      );
+    return this.apiService.get<AnnonceResponse[]>('/annonces/all');
   }
 
   getAnnonceById(id: number): Observable<AnnonceResponse> {
@@ -48,19 +46,11 @@ export class AnnonceService {
   }
 
   createAnnonce(annonce: Annonce): Observable<AnnonceResponse> {
-    const payload = {
-      ...annonce,
-      categorie: { id: annonce.categorie.id }
-    };
-    return this.apiService.post<AnnonceResponse>('/annonces', payload);
+    return this.apiService.post<AnnonceResponse>('/annonces', annonce);
   }
 
   updateAnnonce(id: number, annonce: Annonce): Observable<AnnonceResponse> {
-    const payload = {
-      ...annonce,
-      categorie: { id: annonce.categorie.id }
-    };
-    return this.apiService.put<AnnonceResponse>(`/annonces/${id}`, payload);
+    return this.apiService.put<AnnonceResponse>(`/annonces/${id}`, annonce);
   }
 
   deleteAnnonce(id: number): Observable<void> {
@@ -68,14 +58,18 @@ export class AnnonceService {
   }
 
   getAnnoncesByUser(userId: number): Observable<AnnonceResponse[]> {
-    return this.apiService.get<AnnonceResponse[]>(`/annonces/user/${userId}`);
+    return this.apiService.get<AnnonceResponse[]>(`/annonces/utilisateur/${userId}`);
   }
 
-  searchAnnonces(query: string): Observable<AnnonceResponse[]> {
-    return this.apiService.get<AnnonceResponse[]>(`/annonces/search?q=${query}`);
+  searchAnnonces(titre: string): Observable<AnnonceResponse[]> {
+    return this.apiService.get<AnnonceResponse[]>(`/annonces/search?titre=${titre}`);
   }
 
   getAnnoncesByCategory(categoryId: number): Observable<AnnonceResponse[]> {
-    return this.apiService.get<AnnonceResponse[]>(`/annonces/category/${categoryId}`);
+    return this.apiService.get<AnnonceResponse[]>(`/annonces/categorie/${categoryId}`);
+  }
+
+  getAnnoncesByVille(ville: string): Observable<AnnonceResponse[]> {
+    return this.apiService.get<AnnonceResponse[]>(`/annonces/ville/${ville}`);
   }
 }
